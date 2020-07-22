@@ -20,18 +20,30 @@ import net.minecraft.world.World;
 @Mixin(Block.class)
 public class BlockMixin {
 	@Unique
-	private static final Identifier SAFE_STONECUTTERS_ID = new Identifier("harmfulstonecutters", "safe_stonecutters");
+	private static final String MOD_ID = "harmfulstonecutters";
+
+	@Unique
+	private static final Identifier SAFE_STONECUTTERS_ID = new Identifier(MOD_ID, "safe_stonecutters");
 
 	@Unique
 	private static final Tag<Block> SAFE_STONECUTTERS = TagRegistry.block(SAFE_STONECUTTERS_ID);
 
+	@Unique
+	private static final Identifier ALWAYS_SLICING_ID = new Identifier(MOD_ID, "always_slicing");
+
+	@Unique
+	private static final Tag<Block> ALWAYS_SLICING = TagRegistry.block(ALWAYS_SLICING_ID);
+
+	@Unique
+	private static boolean canSlice(Block block) {
+		if (block.isIn(ALWAYS_SLICING)) return true;
+		return block instanceof StonecutterBlock && !block.isIn(SAFE_STONECUTTERS);
+	}
+
 	@Inject(method = "onSteppedOn", at = @At("HEAD"))
 	private void sliceEntities(World world, BlockPos pos, Entity entity, CallbackInfo ci) {
 		Block block = (Block) (Object) this;
-
-		// Slicing blocks must be unsafe stonecutters
-		if (!(block instanceof StonecutterBlock)) return;
-		if (block.isIn(SAFE_STONECUTTERS)) return;
+		if (!BlockMixin.canSlice(block)) return;
 
 		if (!(entity instanceof LivingEntity)) return;
 		entity.damage(SliceDamageSource.slice(block), 2.0f);
