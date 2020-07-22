@@ -1,0 +1,4 @@
+{
+	"death.attack.harmfulstonecutters.slice": "%s was sliced by %s",
+	"death.attack.harmfulstonecutters.slice.player": "%s was sliced by %s whilst fighting %s"
+}
