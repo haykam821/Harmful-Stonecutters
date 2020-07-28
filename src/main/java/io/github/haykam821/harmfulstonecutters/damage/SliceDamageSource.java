@@ -25,14 +25,18 @@ public class SliceDamageSource extends DamageSource {
 	public Text getDeathMessage(LivingEntity entity) {
 		LivingEntity primeAdversary = entity.getPrimeAdversary();
 		if (primeAdversary != null) {
-			return new TranslatableText(this.getTranslationKey() + ".player", entity.getDisplayName(), this.block.getName(), primeAdversary.getDisplayName());
+			return new TranslatableText(this.getTranslationKey() + ".player", entity.getDisplayName(), this.getBlockName(), primeAdversary.getDisplayName());
 		}
 
-		return new TranslatableText(this.getTranslationKey(), entity.getDisplayName(), this.block.getName());
+		return new TranslatableText(this.getTranslationKey(), entity.getDisplayName(), this.getBlockName());
 	}
 
 	public Block getBlock() {
 		return this.block;
+	}
+
+	private Text getBlockName() {
+  		return new TranslatableText(this.block.getTranslationKey());
 	}
 
 	public static DamageSource slice(Block source) {
