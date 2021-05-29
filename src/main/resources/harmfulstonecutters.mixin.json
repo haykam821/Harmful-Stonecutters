@@ -2,8 +2,10 @@
 	"required": true,
 	"package": "io.github.haykam821.harmfulstonecutters.mixin",
 	"compatibilityLevel": "JAVA_8",
+	"plugin": "io.github.haykam821.harmfulstonecutters.mixin.HarmfulStonecuttersMixinConfigPlugin",
 	"mixins": [
-		"BlockMixin"
+		"BlockMixin116",
+		"BlockMixin117"
 	],
 	"injectors": {
 		"defaultRequire": 1
